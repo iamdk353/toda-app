@@ -9,6 +9,7 @@ const statusUpdate = (ele, style, time) => {
   if (!style) style = "gray";
   status.style.color = style;
   status.innerText = ele + "......";
+  console.log(ele);
   setTimeout(() => {
     status.innerText = "";
   }, time);
@@ -60,9 +61,9 @@ function render(data) {
   main.innerHTML = text;
 }
 async function getAll() {
+  statusUpdate("loading.....");
   try {
     const resp = await fetch("https://todo-api-7t4e.onrender.com/api/v1/tasks");
-    statusUpdate("loading.....");
     const data = await resp.json();
     if (data.length === 0) {
       console.log("data is empty");
