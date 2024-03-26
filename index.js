@@ -62,6 +62,7 @@ function render(data) {
 async function getAll() {
   try {
     const resp = await fetch("https://todo-api-7t4e.onrender.com/api/v1/tasks");
+    statusUpdate("loading.....");
     const data = await resp.json();
     if (data.length === 0) {
       console.log("data is empty");
