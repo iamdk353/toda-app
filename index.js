@@ -4,18 +4,18 @@ const inputVal = document.getElementById("inputVal");
 const status = document.getElementById("status");
 const main = document.getElementById("allTasks");
 
-const statusUpdate = (ele, style, time) => {
-  if (!time) time = 2000;
+const statusUpdate = (ele, style) => {
+  if (ele !== "loading") {
+    console.log("not loading");
+    setTimeout(() => {
+      status.innerText = "";
+    }, 1000);
+  }
   if (!style) style = "gray";
   status.style.color = style;
   status.innerText = ele + "......";
-  setTimeout(() => {
-    status.innerText = "";
-  }, time);
   return;
 };
-
-statusUpdate("");
 
 inputVal.addEventListener("keydown", (e) => {
   if (e.key.length === 1) statusUpdate("typing", "", 500);
@@ -23,10 +23,10 @@ inputVal.addEventListener("keydown", (e) => {
 
 formDom.addEventListener("submit", (e) => {
   e.preventDefault();
-
   statusUpdate("posting", "green");
   postData();
 });
+
 function render(data) {
   let text = ``;
 
@@ -60,9 +60,9 @@ function render(data) {
   main.innerHTML = text;
 }
 async function getAll() {
+  statusUpdate("loading");
   try {
     const resp = await fetch("https://todo-api-7t4e.onrender.com/api/v1/tasks");
-    statusUpdate("loading.....");
     const data = await resp.json();
     if (data.length === 0) {
       console.log("data is empty");
@@ -75,10 +75,6 @@ async function getAll() {
     }
     render(data);
   } catch (error) {
-    statusUpdate("error while fetching ", "red");
-    // setTimeout(() => {
-    //   location.reload();
-    // }, 4000);
     statusUpdate("error while fetching ", "red");
     return;
   }
