@@ -14,6 +14,10 @@ const statusUpdate = (ele, style) => {
   if (!style) style = "gray";
   status.style.color = style;
   status.innerText = ele + "......";
+  console.log(ele);
+  setTimeout(() => {
+    status.innerText = "";
+  }, time);
   return;
 };
 
@@ -60,7 +64,6 @@ function render(data) {
   main.innerHTML = text;
 }
 async function getAll() {
-  statusUpdate("loading");
   try {
     const resp = await fetch("https://todo-api-7t4e.onrender.com/api/v1/tasks");
     const data = await resp.json();

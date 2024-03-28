@@ -15,6 +15,7 @@ const statusUpdate = (ele) => {
 };
 statusUpdate("");
 
+statusUpdate("Loading...");
 async function getSingle() {
   url = `https://todo-api-7t4e.onrender.com/api/v1/tasks/${id}`;
   const resp = await fetch(url);
